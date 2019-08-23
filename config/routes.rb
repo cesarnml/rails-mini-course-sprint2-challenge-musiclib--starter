@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+
   namespace :api do
     namespace :v1 do
+      resources :playlists, only: [:show] do
+        resources :songs, only: [:index, :create]
+      end
       resources :albums, only: [:index, :show] do
         resources :songs, only: [:index]
       end
@@ -8,7 +12,9 @@ Rails.application.routes.draw do
         resources :albums, only: [:index]
       end
       resources :songs, only: [:index, :show]
-      resources :users, only: [:index, :show, :create]
+      resources :users, only: [:index, :show, :create] do
+        resources :playlists, only: [:index, :create]
+      end
     end
   end
 end
